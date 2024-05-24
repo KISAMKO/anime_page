@@ -1,0 +1,29 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: #FDFBE6;
+  background-size: 100% auto;
+  padding: 0;
+  margin: 0;
+}
+
+.header img,
+.footer img {
+  display: block;
+  width: 100%;
+  border: 0;
+  margin: 0 auto;
+}
+
+.el-table__row.d-row {
+  background-color: #ecf2ff;
+}
+
+.el-table__row.s-row {
+  background-color: #e3dffd;
+}
