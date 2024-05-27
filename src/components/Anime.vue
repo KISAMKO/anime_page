@@ -1,7 +1,7 @@
 <template>
     <el-input v-model="keyword" class="w-50 m-2" size="large" placeholder="搜索...">
         <template #append>
-            <el-button loading @click="GetNewData()">刷新</el-button>
+            <el-button :loading="this.isLoading" @click="checkUpdate()">刷新</el-button>
         </template>
     </el-input>
     <el-table :data="tableData" :row-class-name="show_data">
@@ -40,6 +40,7 @@ export default {
             size: 10, //一页多少条
             total: 100, //总条目数
             keyword: '',
+            isLoading: false,
             tableData: [], //表格绑定的数据
             allData: []
         };
@@ -57,10 +58,15 @@ export default {
         async GetNewData() {
             await axios
                 .post('/data/sub_update')
-                .then((result) => { this.allData = result.data; console.log(this.allData); this.getTabelData(); })
+                .then((result) => { this.allData = result.data; console.log(this.allData);this.isLoading="false"; this.getTabelData(); })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
+        },
+        //修改isLoading值，发送请求
+        checkUpdate(){
+            this.isLoading="true";
+            this.GetNewData();
         },
         getTabelData() {
             //allData为全部数据
