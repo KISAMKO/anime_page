@@ -1,7 +1,7 @@
 <template>
     <el-input v-model="keyword" class="w-50 m-2" size="large" placeholder="搜索...">
         <template #append>
-            <el-button @click="GetNewData()">刷新</el-button>
+            <el-button loading @click="GetNewData()">刷新</el-button>
         </template>
     </el-input>
     <el-table :data="tableData" :row-class-name="show_data">
