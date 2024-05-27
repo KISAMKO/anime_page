@@ -1,5 +1,5 @@
 <template>
-    <el-input v-model="keyword" class="w-50 m-2" size="large" placeholder="搜索...">
+    <el-input v-model="keyword" class="w-50 m-2" size="large" placeholder="搜索..."  @input="filterData()">
         <template #append>
             <el-button :loading="this.isLoading" @click="checkUpdate()">刷新</el-button>
         </template>
@@ -42,6 +42,7 @@ export default {
             keyword: '',
             isLoading: false,
             tableData: [], //表格绑定的数据
+            searchData:[],
             allData: []
         };
     },
@@ -49,7 +50,7 @@ export default {
         async GetData() {
             await axios
                 .get('/data/new_episode')
-                .then((result) => { this.allData = result.data; console.log(this.allData); this.getTabelData(); })
+                .then((result) => { this.allData = result.data;this.searchData=result.data; console.log(this.allData); this.getTabelData(); })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
@@ -58,7 +59,7 @@ export default {
         async GetNewData() {
             await axios
                 .post('/data/sub_update')
-                .then((result) => { this.allData = result.data; console.log(this.allData);this.isLoading=false; this.getTabelData(); })
+                .then((result) => { this.allData = result.data;this.searchData=result.data; console.log(this.allData);this.isLoading=false; this.getTabelData(); })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
@@ -69,12 +70,19 @@ export default {
             this.GetNewData();
         },
         getTabelData() {
-            //allData为全部数据
-            this.tableData = this.allData.slice(
+            //allData为全部数据,searchData用于筛选
+            this.tableData = this.searchData.slice(
                 (this.page - 1) * this.size,
                 this.page * this.size
             );
-            this.total = this.allData.length
+            this.total = this.searchData.length
+        },
+        //关键词筛选
+        filterData() {
+            this.searchData = this.allData.filter(
+                array  => array.name.match ( this.keyword )
+            );
+            this.getTabelData();
         },
         show_data({ row, rowIndex }) {
             if (rowIndex % 2 == 0) {
