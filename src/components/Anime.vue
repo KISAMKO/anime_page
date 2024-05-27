@@ -58,14 +58,14 @@ export default {
         async GetNewData() {
             await axios
                 .post('/data/sub_update')
-                .then((result) => { this.allData = result.data; console.log(this.allData);this.isLoading="false"; this.getTabelData(); })
+                .then((result) => { this.allData = result.data; console.log(this.allData);this.isLoading=false; this.getTabelData(); })
                 .catch(function (error) { // 请求失败处理
                     console.log(error);
                 });
         },
         //修改isLoading值，发送请求
         checkUpdate(){
-            this.isLoading="true";
+            this.isLoading=true;
             this.GetNewData();
         },
         getTabelData() {
