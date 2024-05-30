@@ -20,6 +20,14 @@ body {
   margin: 0 auto;
 }
 
+.el-main {
+  padding: 0px !important;
+}
+
+.el-aside {
+  background-color: #FDFBE6;
+}
+
 .el-table__row.d-row {
   background-color: #ecf2ff;
 }
